@@ -1,0 +1,476 @@
+Section 1. Overview:
+
+Collabify is the first platform built to bring trust, clarity, and speed to brand–creator collaborations. In today’s fragmented marketing world, deals are buried in DMs, email chains, and endless back-and-forths, leaving both creators and brands frustrated and vulnerable to ghosting or miscommunication. Collabify eliminates that friction by providing a single, trusted layer where verified profiles, intelligent matching, seamless messaging, and automated contracts work together. Whether you’re a micro-influencer looking to monetize your audience or a brand seeking reliable collaborators, Collabify ensures every connection starts on solid ground.
+
+More than just a marketplace, Collabify is the relationship infrastructure of the creator economy. Users can swipe to discover compatible collaborators, generate and sign NDAs or contracts in seconds, and secure payments through escrow systems, all within a sleek, modern interface. Public collaboration pages, gamified trust badges, and AI-driven recommendations create network effects that reward reliability and performance. With Collabify, brands and creators don’t just make deals—they build trust, credibility, and long-term partnerships in a chaotic, fast-moving industry.
+
+Section 2. Tech stack
+React, Typescript, Tailwind, NextJs, shadcn/ui, Lucide, Supabase
+
+
+
+
+Section 3. Epics & Stories for Collabify
+
+Tagline: “Where marketers and brands click, trust, and collaborate.”
+Below is a prioritized, execution-ready breakdown: Epics → User stories → acceptance criteria, priority, and suggested story-points. I focused the top of the backlog on the Phase 1 MVP (0–6 months) and then mapped Phase 2–4 epics afterward.
+
+EPIC A — Core Accounts & Smart Profiles (MVP)
+
+Goal: Users can select their role (Content Creator or Business/Brand), create a profile that proves credibility, and display the marketing signals buyers care about.
+
+A1 — Role selection (Content Creator or Business/Brand)
+
+Story: As a new user I want to select whether I'm a Content Creator or Business/Brand so the platform shows me relevant features and profile options.
+
+AC: Onboarding/landing page shows role selection (Creator/Brand); selection persists; user can switch role later (optional); relevant profile type is shown based on selection.
+
+Priority: Highest — MVP
+
+Estimate: 2 SP
+
+A2 — Creator profile (metrics & verification)
+
+Story: As a creator I want to display IG/TikTok handles, follower counts, and past campaigns so brands can evaluate me.
+
+AC: Creator can connect social handles; app fetches/display handles and follower numbers (mock in MVP); ability to add portfolio items with images/links.
+
+Priority: High — MVP
+
+Estimate: 5 SP
+
+A3 — Brand profile (ad spend, vertical, collaborators)
+
+Story: As a brand I want to show vertical, ad budget band, and past collaborators.
+
+AC: Brand form captures vertical, ad spend range, and a list of previous campaigns (manual input). Profiles searchable.
+
+Priority: High — MVP
+
+Estimate: 3 SP
+
+A4 — Profile verification badge (basic)
+
+Story: As any user I want a simple verification status to indicate authenticity.
+
+AC: Manual/automated flag that shows “Verified” badge (initially admin-flagged in beta).
+
+Priority: Medium — MVP
+
+Estimate: 2 SP
+
+EPIC B — Instant Matching Engine & Discoverability (MVP)
+
+Goal: Fast discovery: swipe shortlist + ranked matches.
+
+B1 — Tinder-style swipe UI
+
+Story: As a user I want to swipe or shortlist potential collaborators (brands can swipe creators, creators can swipe brands) to quickly evaluate matches.
+
+AC: Swipe left/right or shortlist, card shows key metrics; state persists to shortlist; bidirectional matching (creators can swipe brands, brands can swipe creators).
+
+Priority: Highest — MVP
+
+Estimate: 5 SP
+
+B2 — Basic matching algorithm
+
+Story: As a user I want matches ordered by campaign fit (audience + deliverables) for both creators finding brands and brands finding creators.
+
+AC: Simple weighted matching on tags, vertical, reach and budget; returns ranked list; bidirectional matching algorithm. (AI later)
+
+Priority: High — MVP
+
+Estimate: 5 SP
+
+B3 — Search & filters
+
+Story: As a user I want to filter potential collaborators by reach, niche, rate, and verification (brands filter creators, creators filter brands).
+
+AC: Filters apply and update list instantly; URL reflects filters for shareability; bidirectional filtering support.
+
+Priority: Medium — MVP
+
+Estimate: 3 SP
+
+EPIC C — In-App Messaging & Conversations (MVP)
+
+Goal: Fast, reliable communications with message history and attachments.
+
+C1 — 1:1 messaging
+
+Story: As a user I want to DM collaborators with persisted history.
+
+AC: Real-time-ish messaging (polling/websocket), messages saved, timestamped; unread counts.
+
+Priority: Highest — MVP
+
+Estimate: 8 SP
+
+C2 — Message attachments (images, files)
+
+Story: As a user I want to attach creative specs or mockups.
+
+AC: Attach & download files, size limits, preview images. Stored and retrievable.
+
+Priority: Medium — MVP
+
+Estimate: 3 SP
+
+C3 — Message templates (propose offer)
+
+Story: As a brand I want quick templates to propose budgets and deliverables.
+
+AC: Template dropdown inserts structured message format (title, budget, timeline).
+
+Priority: Medium — MVP
+
+Estimate: 2 SP
+
+EPIC D — Contract & NDA Builder (MVP)
+
+Goal: Reduce friction with auto-generated NDAs & lightweight contract templates + eSign.
+
+D1 — Simple NDA generator
+
+Story: As a user I want a one-click NDA prefilled with brand/creator names and term.
+
+AC: Generates downloadable PDF/TXT with placeholders populated; version stored in conversation.
+
+Priority: High — MVP
+
+Estimate: 4 SP
+
+D2 — Contract templates (basic)
+
+Story: As a user I want a contract template I can customize for deliverables and payments.
+
+AC: Create/edit template fields (deliverables, milestones, payment terms), save versions.
+
+Priority: Medium — MVP
+
+Estimate: 5 SP
+
+D3 — eSign integration (lite)
+
+Story: As two parties I want to sign the NDA/contract electronically.
+
+AC: Integrate with DocuSign or a simple custom checkbox + name + timestamp flow for MVP. Signed docs flag as “signed”.
+
+Priority: High — MVP (DocuSign if possible otherwise custom placeholder)
+
+Estimate: 5 SP
+
+EPIC E — Payments & Escrow (Beta)
+
+Goal: Reduce ghosting by holding funds, release on delivery.
+
+E1 — Payment integration (Stripe sandbox)
+
+Story: As a brand I want to fund an escrow for a deal.
+
+AC: Connect Stripe sandbox, create payment intent, record escrow balance for deal.
+
+Priority: Medium — Beta in MVP
+
+Estimate: 8 SP
+
+E2 — Escrow workflow (hold & release)
+
+Story: As a platform I want to hold funds and release upon acceptance of deliverables.
+
+AC: Status states: funded → in escrow; creator marks delivered → brand approves or disputes → release/refund flow. (Manual ops for disputes in MVP).
+
+Priority: Medium — Beta
+
+Estimate: 8 SP
+
+E3 — Transaction ledger + fees
+
+Story: As admin I want records of transactions and platform fee calculation.
+
+AC: Ledger displays transactions, fee percent applied, totals by deal.
+
+Priority: Low — Beta
+
+Estimate: 3 SP
+
+EPIC F — Campaign Builder & Public Collab Cards (MVP → Phase 2)
+
+Goal: Create campaigns, brief generation, and share public success pages.
+
+F1 — One-page Campaign Builder
+
+Story: As a brand I want to create a campaign brief (title, deliverables, KPI, budget, timeline).
+
+AC: Form saves draft; brief can be edited; preview shows final brief.
+
+Priority: High — MVP
+
+Estimate: 5 SP
+
+F2 — Auto-generate brief (AI-lite)
+
+Story: As a brand I want a brief auto-suggested from small inputs (title + deliverable).
+
+AC: Use rule-based generator to create a human-friendly brief. (ML/AI added later)
+
+Priority: Medium — MVP
+
+Estimate: 3 SP
+
+F3 — Collab Cards (public campaign pages)
+
+Story: As a user I want a public URL for completed collaborations to share as proof.
+
+AC: Public read-only page with campaign summary, collaborators, assets, and performance highlights (manual input for metrics).
+
+Priority: Phase 2
+
+Estimate: 5 SP
+
+EPIC G — Trust Scoring & Gamification (Phase 2)
+
+Goal: Surface reliability and create network effects.
+
+G1 — Reliability badges & leaderboard
+
+Story: As a user I want badges for on-time delivery and verified status.
+
+AC: Badges auto-assigned on conditions (e.g., 5 successful collaborations → “Trusted Creator”); leaderboard page exists.
+
+Priority: Phase 2
+
+Estimate: 5 SP
+
+G2 — Trust score (basic algorithm)
+
+Story: As a buyer I want a trust score that uses payment completion, dispute history, and verifications.
+
+AC: Score visible on profiles; algorithm documented for transparency.
+
+Priority: Phase 2
+
+Estimate: 8 SP
+
+EPIC H — AI Matching & Recommendation (Phase 2)
+
+Goal: Move from rule-based to ML-assisted intelligent recommendations.
+
+H1 — Collabify AI: recommendation engine
+
+Story: As a user I want AI-suggested brand-creator matches tailored to KPIs.
+
+AC: System produces ranked suggestions with explainability (why matched). A/B test against baseline.
+
+Priority: Phase 2 — High
+
+Estimate: 13 SP
+
+H2 — Automated negotiation assistant (Phase 3)
+
+Story: As a user I want suggestions for budgets and timelines based on similar deals.
+
+AC: Assistant recommends price bands and timeline; user can accept suggestion to prefill offer.
+
+Priority: Phase 3
+
+Estimate: 13 SP
+
+EPIC I — Pro Accounts, Teams & Monetization (Phase 2–3)
+
+Goal: Monetize power users and teams.
+
+I1 — Pro subscription features
+
+Story: As a Pro user I want advanced search, analytics, and templates.
+
+AC: Gate features behind subscription; subscription checkout integrated (Stripe).
+
+Priority: Phase 2
+
+Estimate: 8 SP
+
+I2 — Team / Agency accounts
+
+Story: As an agency admin I want to invite team members and allocate seats.
+
+AC: Role-based access, billing per seat, team dashboards for campaigns.
+
+Priority: Phase 3
+
+Estimate: 8 SP
+
+I3 — Transaction fee implementation
+
+Story: As platform admin I want to collect a percentage cut from paid deals.
+
+AC: Fee calculated automatically on release; receipts issued; reporting view for finance.
+
+Priority: Phase 3
+
+Estimate: 5 SP
+
+EPIC J — Integrations & API (Phase 3)
+
+Goal: Plug into marketing tooling and scale distribution.
+
+J1 — HubSpot / CRM sync
+
+Story: As a brand I want to sync campaigns/leads to HubSpot.
+
+AC: Basic OAuth flow + sync of campaign leads to HubSpot deals/contacts.
+
+Priority: Phase 3
+
+Estimate: 8 SP
+
+J2 — Social verification & analytics integration (Meta/TikTok)
+
+Story: As a user I want to verify social handles and pull campaign performance metrics.
+
+AC: OAuth to Meta/TikTok to fetch verification and basic analytics (impressions, CTR) where API allows.
+
+Priority: Phase 3
+
+Estimate: 13 SP
+
+J3 — Public API (read-only v1)
+
+Story: As a developer I want an API to fetch public collab cards and profile metadata.
+
+AC: Public API that serves JSON endpoints for public pages; rate-limited.
+
+Priority: Phase 3
+
+Estimate: 8 SP
+
+EPIC K — Legal, Security & Compliance (Parallel)
+
+Goal: Reduce legal risk and protect user data.
+
+K1 — Data privacy & basic security
+
+Story: As a platform I need secure storage for PII and encrypted docs.
+
+AC: TLS everywhere, encrypted sensitive fields, basic OWASP protections.
+
+Priority: High — parallel with MVP
+
+Estimate: 8 SP
+
+K2 — Contract versioning & storage
+
+Story: As a user I want historical versions of signed agreements.
+
+AC: Every signed doc gets version ID, timestamp, and immutable storage (S3 + audit log).
+
+Priority: High — parallel
+
+Estimate: 5 SP
+
+K3 — Dispute process (manual ops + UI)
+
+Story: As a brand or creator I want to raise disputes with evidence submission.
+
+AC: UI to submit dispute, attachments, admin dashboard to review & resolve.
+
+Priority: Medium — parallel
+
+Estimate: 8 SP
+
+EPIC L — Growth & Launch Operations
+
+Goal: Get to the closed beta target, measure retention, and activate viral loops.
+
+L1 — Closed beta onboarding flow
+
+Story: As an early user I want a guided onboarding that includes role selection (Creator/Brand), sets up my profile, and guides me through creating my first campaign.
+
+AC: Checklist-driven onboarding with progress saved; role selection step; invite-only code flow for beta.
+
+Priority: Highest — MVP launch
+
+Estimate: 3 SP
+
+L2 — Referral / invite system (viral loop)
+
+Story: As a user I want to invite collaborators and track invites (affiliate credit).
+
+AC: Invite links, tracking, simple crediting system, dashboard view of invites.
+
+Priority: Phase 1–2
+
+Estimate: 5 SP
+
+L3 — Collab Cards SEO & sharing
+
+Story: As a user I want public pages to be SEO-friendly and shareable to prove reputation.
+
+AC: Collab cards have meta tags, structured data, share buttons, and canonical URLs.
+
+Priority: Phase 2
+
+Estimate: 5 SP
+
+L4 — Influencer launch program
+
+Story: As Growth lead I want a system to onboard & track influencer partnerships and payouts.
+
+AC: Manual onboarding dashboard, promo codes, simple analytics showing referral conversions.
+
+Priority: Phase 1 launch
+
+Estimate: 5 SP
+
+EPIC M — Admin & Analytics (Ops)
+
+Goal: Platform monitoring, customer support queue, and growth analytics.
+
+M1 — Admin dashboard (users, deals, disputes)
+
+Story: As admin I want to see users, active deals, escrow balances, and disputes.
+
+AC: CRUD for user accounts, deal status, exportable CSVs.
+
+Priority: High — parallel with MVP
+
+Estimate: 8 SP
+
+M2 — Product analytics & retention dashboard
+
+Story: As PM I want DAU/MAU, conversion funnel, and cohort retention.
+
+AC: Dashboards for basic product metrics; event tracking implemented.
+
+Priority: High — MVP/Phase 1
+
+Estimate: 5 SP
+
+Milestones & Mapping (quick view)
+
+MVP (0–6m): A1–A4, B1–B3, C1–C3, D1–D3, F1–F2, L1–L2, K1, M1 (essential admin), basic payments E1 (sandbox).
+
+Phase 2 (6–12m): H1 (AI recommender), F3 (public collab cards), G1–G2 (gamification & score), I1 (Pro), L3–L4 (growth).
+
+Phase 3 (Year 2): Full payments & fees E2–E3, team accounts I2, integrations J1–J3, dispute automation K3.
+
+Phase 4 (Years 3–5): Advanced AI negotiator H2, globalization + localization, Collabify Academy, marketplace.
+
+Prioritization rules (how to pick next sprint)
+
+Critical path first: profiles → messaging → matching → contract (that enables a real collaboration).
+
+If blocked on external integrations (DocuSign, Stripe), build a minimal internal flow to simulate and validate product.
+
+Parallelize legal/security/admin work to avoid rework.
+
+Suggested Sprint cadence & sizing
+
+2-week sprints, team of: 1–2 FE devs (React), 1 BE dev (Node/Express), 1 designer (UI/UX), 1 PM/Founder.
+
+Plan 3–5 stories per sprint (total ~13–20 SP) early on until velocity stabilizes.
+
+If you want, I’ll:
+
+Turn this into a Jira-ready backlog (CSV or JSON with epics/issuetype/estimate/AC)
