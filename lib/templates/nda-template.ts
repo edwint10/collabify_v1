@@ -86,3 +86,5 @@ export function replaceNDAVariables(template: string, variables: NDAVariables): 
 }
 
 
+
+

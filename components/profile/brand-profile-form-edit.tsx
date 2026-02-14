@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Building2, Save } from "lucide-react"
+import ImageUpload from "./image-upload"
 
 const brandProfileSchema = z.object({
   companyName: z.string().min(1, "Company name is required"),
@@ -29,6 +30,7 @@ interface BrandProfileFormEditProps {
     vertical?: string
     ad_spend_range?: string
     bio?: string
+    profile_image_url?: string | null
   }
 }
 
@@ -37,6 +39,7 @@ export default function BrandProfileFormEdit({ userId, initialData }: BrandProfi
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(!initialData)
+  const [profileImageUrl, setProfileImageUrl] = useState<string | null>(initialData?.profile_image_url || null)
 
   const {
     register,
@@ -63,6 +66,7 @@ export default function BrandProfileFormEdit({ userId, initialData }: BrandProfi
       setValue('vertical', initialData.vertical || '')
       setValue('adSpendRange', initialData.ad_spend_range || '')
       setValue('bio', initialData.bio || '')
+      setProfileImageUrl(initialData.profile_image_url || null)
       setLoading(false)
     }
   }, [initialData, setValue])
@@ -77,6 +81,7 @@ export default function BrandProfileFormEdit({ userId, initialData }: BrandProfi
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          'X-User-Id': userId,
         },
         body: JSON.stringify({
           userId,
@@ -84,6 +89,7 @@ export default function BrandProfileFormEdit({ userId, initialData }: BrandProfi
           vertical: data.vertical,
           ad_spend_range: data.adSpendRange,
           bio: data.bio,
+          profile_image_url: profileImageUrl,
         }),
       })
 
@@ -122,6 +128,14 @@ export default function BrandProfileFormEdit({ userId, initialData }: BrandProfi
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          {/* Profile Image Upload */}
+          <ImageUpload
+            currentImageUrl={profileImageUrl}
+            onImageChange={setProfileImageUrl}
+            userId={userId}
+            label="Brand Logo / Profile Image"
+          />
+
           <div className="space-y-2">
             <Label htmlFor="companyName" className="flex items-center gap-2">
               <Building2 className="h-4 w-4" />

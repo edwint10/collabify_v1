@@ -8,6 +8,7 @@ export interface CreatorProfileData {
   follower_count_tiktok?: number
   bio?: string
   portfolio_items?: any[]
+  profile_image_url?: string | null
 }
 
 export interface BrandProfileData {
@@ -16,6 +17,7 @@ export interface BrandProfileData {
   ad_spend_range?: string
   bio?: string
   previous_campaigns?: any[]
+  profile_image_url?: string | null
 }
 
 export async function createCreatorProfile(userId: string, profileData: CreatorProfileData) {

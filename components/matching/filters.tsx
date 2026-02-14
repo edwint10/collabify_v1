@@ -17,6 +17,15 @@ interface MatchFilters {
   verified?: boolean
   adSpendRange?: string
   search?: string
+  // New filters for brands viewing creators
+  platform?: string
+  minFollowersIg?: number
+  maxFollowersIg?: number
+  minFollowersTiktok?: number
+  maxFollowersTiktok?: number
+  hasPortfolio?: boolean
+  // New filters for creators viewing brands
+  hasPreviousCampaigns?: boolean
 }
 
 interface FiltersProps {
@@ -35,6 +44,13 @@ function FiltersContent({ role, onFiltersChange }: FiltersProps) {
     verified: searchParams.get('verified') === 'true',
     adSpendRange: searchParams.get('adSpendRange') || undefined,
     search: searchParams.get('search') || undefined,
+    platform: searchParams.get('platform') || undefined,
+    minFollowersIg: searchParams.get('minFollowersIg') ? parseInt(searchParams.get('minFollowersIg')!) : undefined,
+    maxFollowersIg: searchParams.get('maxFollowersIg') ? parseInt(searchParams.get('maxFollowersIg')!) : undefined,
+    minFollowersTiktok: searchParams.get('minFollowersTiktok') ? parseInt(searchParams.get('minFollowersTiktok')!) : undefined,
+    maxFollowersTiktok: searchParams.get('maxFollowersTiktok') ? parseInt(searchParams.get('maxFollowersTiktok')!) : undefined,
+    hasPortfolio: searchParams.get('hasPortfolio') === 'true',
+    hasPreviousCampaigns: searchParams.get('hasPreviousCampaigns') === 'true',
   })
 
   // Remove the useEffect that calls onFiltersChange on every filter change
@@ -52,6 +68,13 @@ function FiltersContent({ role, onFiltersChange }: FiltersProps) {
     if (updated.verified) params.set('verified', 'true')
     if (updated.adSpendRange) params.set('adSpendRange', updated.adSpendRange)
     if (updated.search) params.set('search', updated.search)
+    if (updated.platform) params.set('platform', updated.platform)
+    if (updated.minFollowersIg) params.set('minFollowersIg', updated.minFollowersIg.toString())
+    if (updated.maxFollowersIg) params.set('maxFollowersIg', updated.maxFollowersIg.toString())
+    if (updated.minFollowersTiktok) params.set('minFollowersTiktok', updated.minFollowersTiktok.toString())
+    if (updated.maxFollowersTiktok) params.set('maxFollowersTiktok', updated.maxFollowersTiktok.toString())
+    if (updated.hasPortfolio) params.set('hasPortfolio', 'true')
+    if (updated.hasPreviousCampaigns) params.set('hasPreviousCampaigns', 'true')
 
     router.push(`?${params.toString()}`, { scroll: false })
   }
@@ -136,14 +159,14 @@ function FiltersContent({ role, onFiltersChange }: FiltersProps) {
               <div className="space-y-2">
                 <Label htmlFor="vertical">Industry Vertical</Label>
                 <Select
-                  value={filters.vertical || ''}
-                  onValueChange={(value) => updateFilters({ vertical: value || undefined })}
+                  value={filters.vertical || 'all'}
+                  onValueChange={(value) => updateFilters({ vertical: value === 'all' ? undefined : value })}
                 >
                   <SelectTrigger id="vertical">
                     <SelectValue placeholder="All verticals" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All verticals</SelectItem>
+                    <SelectItem value="all">All verticals</SelectItem>
                     <SelectItem value="fashion">Fashion</SelectItem>
                     <SelectItem value="beauty">Beauty</SelectItem>
                     <SelectItem value="tech">Technology</SelectItem>
@@ -165,14 +188,14 @@ function FiltersContent({ role, onFiltersChange }: FiltersProps) {
               <div className="space-y-2">
                 <Label htmlFor="adSpendRange">Ad Spend Range</Label>
                 <Select
-                  value={filters.adSpendRange || ''}
-                  onValueChange={(value) => updateFilters({ adSpendRange: value || undefined })}
+                  value={filters.adSpendRange || 'all'}
+                  onValueChange={(value) => updateFilters({ adSpendRange: value === 'all' ? undefined : value })}
                 >
                   <SelectTrigger id="adSpendRange">
                     <SelectValue placeholder="All ranges" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All ranges</SelectItem>
+                    <SelectItem value="all">All ranges</SelectItem>
                     <SelectItem value="under-1k">Under $1,000</SelectItem>
                     <SelectItem value="1k-5k">$1,000 - $5,000</SelectItem>
                     <SelectItem value="5k-10k">$5,000 - $10,000</SelectItem>
@@ -182,6 +205,107 @@ function FiltersContent({ role, onFiltersChange }: FiltersProps) {
                     <SelectItem value="over-100k">Over $100,000</SelectItem>
                   </SelectContent>
                 </Select>
+              </div>
+            )}
+
+            {/* Platform Filter (for brands viewing creators) */}
+            {role === 'brand' && (
+              <div className="space-y-2">
+                <Label htmlFor="platform">Platform</Label>
+                <Select
+                  value={filters.platform || 'all'}
+                  onValueChange={(value) => updateFilters({ platform: value === 'all' ? undefined : value })}
+                >
+                  <SelectTrigger id="platform">
+                    <SelectValue placeholder="All platforms" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All platforms</SelectItem>
+                    <SelectItem value="instagram">Instagram only</SelectItem>
+                    <SelectItem value="tiktok">TikTok only</SelectItem>
+                    <SelectItem value="both">Both platforms</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+
+            {/* Instagram Followers Filters (for brands viewing creators) */}
+            {role === 'brand' && (
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="minFollowersIg">Min Instagram Followers</Label>
+                  <Input
+                    id="minFollowersIg"
+                    type="number"
+                    placeholder="0"
+                    value={filters.minFollowersIg || ''}
+                    onChange={(e) => updateFilters({ minFollowersIg: e.target.value ? parseInt(e.target.value) : undefined })}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="maxFollowersIg">Max Instagram Followers</Label>
+                  <Input
+                    id="maxFollowersIg"
+                    type="number"
+                    placeholder="10000000"
+                    value={filters.maxFollowersIg || ''}
+                    onChange={(e) => updateFilters({ maxFollowersIg: e.target.value ? parseInt(e.target.value) : undefined })}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* TikTok Followers Filters (for brands viewing creators) */}
+            {role === 'brand' && (
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="minFollowersTiktok">Min TikTok Followers</Label>
+                  <Input
+                    id="minFollowersTiktok"
+                    type="number"
+                    placeholder="0"
+                    value={filters.minFollowersTiktok || ''}
+                    onChange={(e) => updateFilters({ minFollowersTiktok: e.target.value ? parseInt(e.target.value) : undefined })}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="maxFollowersTiktok">Max TikTok Followers</Label>
+                  <Input
+                    id="maxFollowersTiktok"
+                    type="number"
+                    placeholder="10000000"
+                    value={filters.maxFollowersTiktok || ''}
+                    onChange={(e) => updateFilters({ maxFollowersTiktok: e.target.value ? parseInt(e.target.value) : undefined })}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Has Portfolio Filter (for brands viewing creators) */}
+            {role === 'brand' && (
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="hasPortfolio"
+                  checked={filters.hasPortfolio || false}
+                  onCheckedChange={(checked) => updateFilters({ hasPortfolio: checked as boolean })}
+                />
+                <Label htmlFor="hasPortfolio" className="cursor-pointer">
+                  Has portfolio
+                </Label>
+              </div>
+            )}
+
+            {/* Has Previous Campaigns Filter (for creators viewing brands) */}
+            {role === 'creator' && (
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="hasPreviousCampaigns"
+                  checked={filters.hasPreviousCampaigns || false}
+                  onCheckedChange={(checked) => updateFilters({ hasPreviousCampaigns: checked as boolean })}
+                />
+                <Label htmlFor="hasPreviousCampaigns" className="cursor-pointer">
+                  Has previous campaigns
+                </Label>
               </div>
             )}
 

@@ -4,7 +4,7 @@ import { createUser } from '@/lib/api/users'
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { role } = body
+    const { role, authUserId } = body
 
     if (!role || (role !== 'creator' && role !== 'brand')) {
       return NextResponse.json(
@@ -13,7 +13,23 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const user = await createUser(role)
+    if (!authUserId) {
+      return NextResponse.json(
+        { error: 'Authentication user ID is required' },
+        { status: 400 }
+      )
+    }
+
+    // Verify authUserId is a valid UUID format
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+    if (!uuidRegex.test(authUserId)) {
+      return NextResponse.json(
+        { error: 'Invalid authentication user ID format' },
+        { status: 400 }
+      )
+    }
+
+    const user = await createUser(role, authUserId)
 
     return NextResponse.json({ user }, { status: 201 })
   } catch (error: any) {

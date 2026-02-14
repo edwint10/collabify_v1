@@ -7,6 +7,9 @@ import { Button } from "@/components/ui/button"
 import VerificationBadge from "@/components/ui/verification-badge"
 import { User, Building2, Edit, Instagram, Video, DollarSign } from "lucide-react"
 import Link from "next/link"
+import CreatorPerformanceTracker from "@/components/performance/creator-performance-tracker"
+import BrandPerformanceTracker from "@/components/performance/brand-performance-tracker"
+import SocialAccountsManager from "@/components/social/social-accounts-manager"
 
 interface ProfileData {
   user: {
@@ -87,7 +90,7 @@ export default function DashboardPage() {
             Dashboard
           </h1>
           <p className="text-lg text-gray-600">
-            Welcome to Collabify!
+            Welcome to Hyperbrandz!
           </p>
         </div>
 
@@ -208,7 +211,7 @@ export default function DashboardPage() {
             <CardHeader>
               <CardTitle>Quick Actions</CardTitle>
               <CardDescription>
-                Get started with Collabify
+                Get started with Hyperbrandz
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
@@ -251,6 +254,27 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
         </div>
+
+        {/* Social Accounts Manager */}
+        {profile && (
+          <div className="mt-8">
+            <SocialAccountsManager userId={user.id} />
+          </div>
+        )}
+
+        {/* Performance Tracker for Creators */}
+        {user.role === 'creator' && profile && (
+          <div className="mt-8">
+            <CreatorPerformanceTracker creatorId={user.id} />
+          </div>
+        )}
+
+        {/* Performance Tracker for Brands */}
+        {user.role === 'brand' && profile && (
+          <div className="mt-8">
+            <BrandPerformanceTracker brandId={user.id} />
+          </div>
+        )}
       </div>
     </main>
   )

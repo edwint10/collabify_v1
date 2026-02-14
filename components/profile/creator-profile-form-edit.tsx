@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Instagram, Video, Save } from "lucide-react"
+import ImageUpload from "./image-upload"
 
 const creatorProfileSchema = z.object({
   instagramHandle: z.string().optional(),
@@ -30,6 +31,7 @@ interface CreatorProfileFormEditProps {
     follower_count_ig?: number
     follower_count_tiktok?: number
     bio?: string
+    profile_image_url?: string | null
   }
 }
 
@@ -38,6 +40,7 @@ export default function CreatorProfileFormEdit({ userId, initialData }: CreatorP
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(!initialData)
+  const [profileImageUrl, setProfileImageUrl] = useState<string | null>(initialData?.profile_image_url || null)
 
   const {
     register,
@@ -62,6 +65,7 @@ export default function CreatorProfileFormEdit({ userId, initialData }: CreatorP
       setValue('followerCountIG', initialData.follower_count_ig?.toString() || '')
       setValue('followerCountTiktok', initialData.follower_count_tiktok?.toString() || '')
       setValue('bio', initialData.bio || '')
+      setProfileImageUrl(initialData.profile_image_url || null)
       setLoading(false)
     }
   }, [initialData, setValue])
@@ -76,6 +80,7 @@ export default function CreatorProfileFormEdit({ userId, initialData }: CreatorP
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          'X-User-Id': userId,
         },
         body: JSON.stringify({
           userId,
@@ -84,6 +89,7 @@ export default function CreatorProfileFormEdit({ userId, initialData }: CreatorP
           follower_count_ig: data.followerCountIG ? parseInt(data.followerCountIG) : undefined,
           follower_count_tiktok: data.followerCountTiktok ? parseInt(data.followerCountTiktok) : undefined,
           bio: data.bio,
+          profile_image_url: profileImageUrl,
         }),
       })
 
@@ -122,6 +128,14 @@ export default function CreatorProfileFormEdit({ userId, initialData }: CreatorP
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          {/* Profile Image Upload */}
+          <ImageUpload
+            currentImageUrl={profileImageUrl}
+            onImageChange={setProfileImageUrl}
+            userId={userId}
+            label="Profile Photo"
+          />
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="instagramHandle" className="flex items-center gap-2">

@@ -4,6 +4,8 @@ import VerificationBadge from "@/components/ui/verification-badge"
 import { User, Building2, Instagram, Video, DollarSign } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
+import PostsFeed from "@/components/posts/posts-feed"
 
 async function getProfile(userId: string) {
   try {
@@ -43,18 +45,32 @@ export default async function UserProfilePage({
           <CardHeader>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <div className={`p-4 rounded-full ${
-                  user.role === 'creator' ? 'bg-blue-100' : 'bg-purple-100'
-                }`}>
-                  {user.role === 'creator' ? (
-                    <User className="h-8 w-8 text-blue-600" />
-                  ) : (
-                    <Building2 className="h-8 w-8 text-purple-600" />
-                  )}
-                </div>
+                {/* Profile Image or Icon */}
+                {profile?.profile_image_url ? (
+                  <div className="relative w-20 h-20 rounded-full overflow-hidden border-4 border-white shadow-lg">
+                    <Image
+                      src={profile.profile_image_url}
+                      alt={user.role === 'creator' ? 'Creator profile' : 'Brand profile'}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className={`p-4 rounded-full ${
+                    user.role === 'creator' ? 'bg-blue-100' : 'bg-purple-100'
+                  }`}>
+                    {user.role === 'creator' ? (
+                      <User className="h-8 w-8 text-blue-600" />
+                    ) : (
+                      <Building2 className="h-8 w-8 text-purple-600" />
+                    )}
+                  </div>
+                )}
                 <div>
                   <CardTitle className="text-2xl flex items-center gap-2">
-                    {user.role === 'creator' ? 'Creator Profile' : 'Brand Profile'}
+                    {user.role === 'creator' 
+                      ? (profile?.instagram_handle ? `@${profile.instagram_handle}` : 'Creator Profile')
+                      : (profile?.company_name || 'Brand Profile')}
                     <VerificationBadge verified={user.verified} />
                   </CardTitle>
                   <CardDescription>
@@ -143,6 +159,26 @@ export default async function UserProfilePage({
             )}
           </CardContent>
         </Card>
+
+        {/* Posts Feed */}
+        <div className="mt-6">
+          <Card className="w-full">
+            <CardHeader>
+              <CardTitle>Posts</CardTitle>
+              <CardDescription>
+                {user.role === 'creator' 
+                  ? 'Latest updates and content'
+                  : 'Company updates and announcements'}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <PostsFeed 
+                userId={user.id}
+                showCreator={true}
+              />
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </main>
   )

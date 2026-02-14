@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import TinderCard from "react-tinder-card"
 import SwipeCard from "./swipe-card"
 import { Button } from "@/components/ui/button"
@@ -31,6 +31,7 @@ export default function SwipeContainer({
   const [currentIndex, setCurrentIndex] = useState(matches.length - 1)
   const [swiped, setSwiped] = useState<string[]>([])
   const [isProcessing, setIsProcessing] = useState(false)
+  const childRefs = useRef<{ [key: string]: any }>({})
 
   useEffect(() => {
     setCurrentIndex(matches.length - 1)
@@ -59,16 +60,22 @@ export default function SwipeContainer({
     // Card has been swiped out of view
   }
 
-  const handleShortlist = async () => {
+  const handleShortlist = () => {
     if (currentIndex < 0 || isProcessing) return
     const currentMatch = matches[currentIndex]
-    await swipedDirection('right', currentMatch.userId)
+    const ref = childRefs.current[currentMatch.userId]
+    if (ref) {
+      ref.swipe('right')
+    }
   }
 
-  const handleReject = async () => {
+  const handleReject = () => {
     if (currentIndex < 0 || isProcessing) return
     const currentMatch = matches[currentIndex]
-    await swipedDirection('left', currentMatch.userId)
+    const ref = childRefs.current[currentMatch.userId]
+    if (ref) {
+      ref.swipe('left')
+    }
   }
 
   if (matches.length === 0) {
@@ -90,6 +97,7 @@ export default function SwipeContainer({
         {matches.map((match, index) => (
           <TinderCard
             key={match.userId}
+            ref={(el) => (childRefs.current[match.userId] = el)}
             className="absolute"
             onSwipe={(dir) => swipedDirection(dir, match.userId)}
             onCardLeftScreen={() => outOfFrame(match.userId)}

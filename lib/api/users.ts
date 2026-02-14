@@ -1,13 +1,24 @@
 import { createClient } from '@/utils/supabase/server'
 import { cookies } from 'next/headers'
 
-export async function createUser(role: 'creator' | 'brand') {
+export async function createUser(role: 'creator' | 'brand', authUserId: string) {
   const cookieStore = await cookies()
   const supabase = createClient(cookieStore)
   
+  // Check if user already exists with this auth_user_id
+  const { data: existingUser } = await supabase
+    .from('users')
+    .select('id')
+    .eq('auth_user_id', authUserId)
+    .single()
+
+  if (existingUser) {
+    throw new Error('User already exists with this email')
+  }
+  
   const { data, error } = await supabase
     .from('users')
-    .insert([{ role }])
+    .insert([{ role, auth_user_id: authUserId }])
     .select()
     .single()
   

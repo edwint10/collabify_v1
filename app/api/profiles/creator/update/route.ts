@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { updateCreatorProfile } from '@/lib/api/profiles'
+import { verifyUserAuth } from '@/lib/utils/auth'
 
 export async function PUT(request: NextRequest) {
   try {
@@ -13,11 +14,25 @@ export async function PUT(request: NextRequest) {
       )
     }
 
+    // Verify authentication - user can only update their own profile
+    await verifyUserAuth(request, userId)
+
     const profile = await updateCreatorProfile(userId, profileData)
 
     return NextResponse.json({ profile }, { status: 200 })
   } catch (error: any) {
     console.error('Error in update creator profile API:', error)
+    
+    // Return 401 for authentication errors
+    if (error.message.includes('Authentication required') || 
+        error.message.includes('Unauthorized') ||
+        error.message.includes('Invalid user')) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: 401 }
+      )
+    }
+
     return NextResponse.json(
       { error: error.message || 'Failed to update creator profile' },
       { status: 500 }

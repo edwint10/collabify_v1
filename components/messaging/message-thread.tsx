@@ -2,8 +2,9 @@
 
 import { useEffect, useRef } from "react"
 import Image from "next/image"
-import { User, Building2, File, Download, FileText } from "lucide-react"
+import { User, Building2, File, Download, FileText, Edit } from "lucide-react"
 import { formatDistanceToNow } from "date-fns"
+import { Button } from "@/components/ui/button"
 
 interface MessageAttachment {
   url: string
@@ -31,6 +32,7 @@ interface MessageThreadProps {
     verified: boolean
   }
   otherProfile?: any
+  onEditContract?: (contractId: string) => void
 }
 
 const isImage = (attachment: MessageAttachment): boolean => {
@@ -41,7 +43,8 @@ export default function MessageThread({
   messages,
   currentUserId,
   otherUser,
-  otherProfile
+  otherProfile,
+  onEditContract
 }: MessageThreadProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
@@ -115,24 +118,59 @@ export default function MessageThread({
                         if (attachment.type === 'contract' || (attachment as any).contractId) {
                           const contractId = (attachment as any).contractId || attachment.url.split('/').pop()
                           return (
-                            <a
+                            <div
                               key={idx}
-                              href={attachment.url}
-                              className={`flex items-center gap-2 p-3 rounded border-2 ${
+                              className={`flex flex-col gap-3 p-4 rounded-xl border-2 shadow-md hover:shadow-lg transition-all ${
                                 isOwnMessage
-                                  ? 'bg-primary-foreground/20 text-primary-foreground border-primary-foreground/30'
-                                  : 'bg-white text-gray-700 border-gray-300'
-                              } hover:opacity-90 transition-opacity`}
+                                  ? 'bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200 text-blue-900'
+                                  : 'bg-gradient-to-br from-gray-50 to-gray-100 border-gray-200 text-gray-900'
+                              }`}
                             >
-                              <FileText className="h-5 w-5" />
-                              <div className="flex-1">
-                                <span className="text-sm font-semibold block">
-                                  {attachment.filename || attachment.name || 'NDA'}
-                                </span>
-                                <span className="text-xs opacity-75">Click to view and sign</span>
-                              </div>
-                              <Download className="h-4 w-4" />
-                            </a>
+                              <a
+                                href={`/contracts/${contractId}/sign`}
+                                className={`flex items-center gap-3 hover:opacity-90 transition-opacity group`}
+                              >
+                                <div className={`p-3 rounded-lg ${
+                                  isOwnMessage 
+                                    ? 'bg-blue-100 group-hover:bg-blue-200' 
+                                    : 'bg-white group-hover:bg-gray-50'
+                                } transition-colors shadow-sm`}>
+                                  <FileText className={`h-6 w-6 ${
+                                    isOwnMessage ? 'text-blue-600' : 'text-gray-600'
+                                  }`} />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <span className="text-sm font-bold block truncate">
+                                    {attachment.filename || attachment.name || 'Contract'}
+                                  </span>
+                                  <span className={`text-xs mt-1 ${
+                                    isOwnMessage ? 'text-blue-700' : 'text-gray-600'
+                                  }`}>
+                                    Click to view and sign
+                                  </span>
+                                </div>
+                                <div className={`p-2 rounded-lg ${
+                                  isOwnMessage 
+                                    ? 'bg-blue-100 group-hover:bg-blue-200' 
+                                    : 'bg-white group-hover:bg-gray-50'
+                                } transition-colors`}>
+                                  <Download className={`h-4 w-4 ${
+                                    isOwnMessage ? 'text-blue-600' : 'text-gray-600'
+                                  }`} />
+                                </div>
+                              </a>
+                              {isOwnMessage && onEditContract && (
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="w-full border-2 hover:bg-blue-100 hover:border-blue-300 transition-all"
+                                  onClick={() => onEditContract(contractId)}
+                                >
+                                  <Edit className="h-3.5 w-3.5 mr-2" />
+                                  Edit Contract
+                                </Button>
+                              )}
+                            </div>
                           )
                         }
                         

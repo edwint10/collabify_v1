@@ -26,3 +26,5 @@ export function generateNDAText(template: string, variables: NDAVariables): stri
 }
 
 
+
+

@@ -12,6 +12,15 @@ export interface MatchFilters {
   verified?: boolean
   adSpendRange?: string
   search?: string
+  // New filters for brands viewing creators
+  platform?: string
+  minFollowersIg?: number
+  maxFollowersIg?: number
+  minFollowersTiktok?: number
+  maxFollowersTiktok?: number
+  hasPortfolio?: boolean
+  // New filters for creators viewing brands
+  hasPreviousCampaigns?: boolean
 }
 
 export async function createMatch(

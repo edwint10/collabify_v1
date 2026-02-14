@@ -53,6 +53,7 @@ export default function CreatorProfileForm() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'X-User-Id': userId,
         },
         body: JSON.stringify({
           userId,

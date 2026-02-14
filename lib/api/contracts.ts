@@ -152,11 +152,23 @@ export async function updateContract(contractId: string, contractData: Partial<C
   const cookieStore = await cookies()
   const supabase = createClient(cookieStore)
 
+  // Get existing contract to check current version
+  const existingContract = await getContract(contractId)
+
   const updateData: any = {
     updated_at: new Date().toISOString()
   }
 
-  if (contractData.content !== undefined) updateData.content = contractData.content
+  // If content is being updated, increment version
+  if (contractData.content !== undefined) {
+    updateData.content = contractData.content
+    // Only increment version if content actually changed
+    if (contractData.content !== existingContract.content) {
+      updateData.version = (existingContract.version || 1) + 1
+    }
+  }
+
+  // Allow explicit version override if needed
   if (contractData.version !== undefined) updateData.version = contractData.version
   if (contractData.signed_by_creator !== undefined) updateData.signed_by_creator = contractData.signed_by_creator
   if (contractData.signed_by_brand !== undefined) updateData.signed_by_brand = contractData.signed_by_brand

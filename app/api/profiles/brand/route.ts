@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createBrandProfile } from '@/lib/api/profiles'
+import { verifyUserAuth } from '@/lib/utils/auth'
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,11 +14,25 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Verify authentication - user can only create their own profile
+    await verifyUserAuth(request, userId)
+
     const profile = await createBrandProfile(userId, profileData)
 
     return NextResponse.json({ profile }, { status: 201 })
   } catch (error: any) {
     console.error('Error in create brand profile API:', error)
+    
+    // Return 401 for authentication errors
+    if (error.message.includes('Authentication required') || 
+        error.message.includes('Unauthorized') ||
+        error.message.includes('Invalid user')) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: 401 }
+      )
+    }
+
     return NextResponse.json(
       { error: error.message || 'Failed to create brand profile' },
       { status: 500 }

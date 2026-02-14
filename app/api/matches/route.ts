@@ -17,6 +17,13 @@ export async function GET(request: NextRequest) {
     const verified = searchParams.get('verified') === 'true' ? true : undefined
     const adSpendRange = searchParams.get('adSpendRange') || undefined
     const search = searchParams.get('search') || undefined
+    const platform = searchParams.get('platform') || undefined
+    const minFollowersIg = searchParams.get('minFollowersIg') ? parseInt(searchParams.get('minFollowersIg')!) : undefined
+    const maxFollowersIg = searchParams.get('maxFollowersIg') ? parseInt(searchParams.get('maxFollowersIg')!) : undefined
+    const minFollowersTiktok = searchParams.get('minFollowersTiktok') ? parseInt(searchParams.get('minFollowersTiktok')!) : undefined
+    const maxFollowersTiktok = searchParams.get('maxFollowersTiktok') ? parseInt(searchParams.get('maxFollowersTiktok')!) : undefined
+    const hasPortfolio = searchParams.get('hasPortfolio') === 'true'
+    const hasPreviousCampaigns = searchParams.get('hasPreviousCampaigns') === 'true'
     const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : 50
     const offset = searchParams.get('offset') ? parseInt(searchParams.get('offset')!) : 0
 
@@ -153,6 +160,64 @@ export async function GET(request: NextRequest) {
                  profile.bio?.toLowerCase().includes(searchLower)
         }
         return false
+      })
+    }
+
+    // Platform filter (for brands viewing creators)
+    if (platform && oppositeRole === 'creator') {
+      filteredMatches = filteredMatches.filter(match => {
+        const profile = match.profile as any
+        if (platform === 'instagram') {
+          return profile.instagram_handle && profile.instagram_handle.trim() !== ''
+        }
+        if (platform === 'tiktok') {
+          return profile.tiktok_handle && profile.tiktok_handle.trim() !== ''
+        }
+        if (platform === 'both') {
+          return (profile.instagram_handle && profile.instagram_handle.trim() !== '') &&
+                 (profile.tiktok_handle && profile.tiktok_handle.trim() !== '')
+        }
+        return true
+      })
+    }
+
+    // Instagram followers filters (for brands viewing creators)
+    if ((minFollowersIg !== undefined || maxFollowersIg !== undefined) && oppositeRole === 'creator') {
+      filteredMatches = filteredMatches.filter(match => {
+        const profile = match.profile as any
+        const followersIg = profile.follower_count_ig || 0
+        if (minFollowersIg !== undefined && followersIg < minFollowersIg) return false
+        if (maxFollowersIg !== undefined && followersIg > maxFollowersIg) return false
+        return true
+      })
+    }
+
+    // TikTok followers filters (for brands viewing creators)
+    if ((minFollowersTiktok !== undefined || maxFollowersTiktok !== undefined) && oppositeRole === 'creator') {
+      filteredMatches = filteredMatches.filter(match => {
+        const profile = match.profile as any
+        const followersTiktok = profile.follower_count_tiktok || 0
+        if (minFollowersTiktok !== undefined && followersTiktok < minFollowersTiktok) return false
+        if (maxFollowersTiktok !== undefined && followersTiktok > maxFollowersTiktok) return false
+        return true
+      })
+    }
+
+    // Has portfolio filter (for brands viewing creators)
+    if (hasPortfolio && oppositeRole === 'creator') {
+      filteredMatches = filteredMatches.filter(match => {
+        const profile = match.profile as any
+        const portfolioItems = profile.portfolio_items || []
+        return Array.isArray(portfolioItems) && portfolioItems.length > 0
+      })
+    }
+
+    // Has previous campaigns filter (for creators viewing brands)
+    if (hasPreviousCampaigns && oppositeRole === 'brand') {
+      filteredMatches = filteredMatches.filter(match => {
+        const profile = match.profile as any
+        const previousCampaigns = profile.previous_campaigns || []
+        return Array.isArray(previousCampaigns) && previousCampaigns.length > 0
       })
     }
 
