@@ -4,7 +4,7 @@ import { createClient } from '@/utils/supabase/server'
 import { cookies } from 'next/headers'
 import { verifyUserAuth } from '@/lib/utils/auth'
 
-type Platform = 'instagram' | 'tiktok' | 'youtube' | 'twitter' | 'tiktok-business'
+type Platform = 'instagram' | 'tiktok' | 'youtube' | 'twitter' | 'tiktok_business'
 
 // Map URL platform names to internal platform names
 const platformMap: Record<string, string> = {
@@ -67,7 +67,6 @@ export async function GET(
     const supabase = createClient(cookieStore)
 
     // Get user info from platform
-    const api = manager.getAPI(platform)
     let platformUserId: string
     let username: string | undefined
     let metadata: any = {}
@@ -105,7 +104,7 @@ export async function GET(
           followers_count: response.data.public_metrics?.followers_count,
           following_count: response.data.public_metrics?.following_count,
         }
-      } else if (platform === 'tiktok-business' && api) {
+      } else if (platform === 'tiktok_business' && api) {
         const response = await (api as any).getAdvertiserInfo(tokenResponse.access_token)
         if (response.data && response.data.list && response.data.list.length > 0) {
           platformUserId = response.data.list[0].advertiser_id

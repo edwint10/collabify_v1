@@ -3,7 +3,7 @@ import { getSocialMediaManager } from '@/lib/services/social-media'
 import { cookies } from 'next/headers'
 import { verifyUserAuth } from '@/lib/utils/auth'
 
-type Platform = 'instagram' | 'tiktok' | 'youtube' | 'twitter' | 'tiktok-business'
+type Platform = 'instagram' | 'tiktok' | 'youtube' | 'twitter' | 'tiktok_business'
 
 // Map URL platform names to internal platform names
 const platformMap: Record<string, string> = {
