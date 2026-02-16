@@ -79,7 +79,7 @@ export default function MainNav() {
   }
 
   // Don't show nav on home page, signup, login, or profile creation
-  if (pathname === '/' || pathname === '/signup' || pathname === '/login' || pathname?.startsWith('/profile/')) {
+  if (pathname === '/' || pathname === '/signup' || pathname === '/login' || pathname === '/early-access' || pathname?.startsWith('/profile/')) {
     return null
   }
 

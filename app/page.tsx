@@ -167,6 +167,12 @@ export default function SplashPage() {
           </div>
           <div className="flex items-center gap-3">
             <span className="text-xs text-gray-400 dark:text-white/40 hidden sm:block">Launching Soon</span>
+            <a
+              href="/early-access"
+              className="px-4 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white hover:opacity-90 transition-opacity"
+            >
+              Early Access
+            </a>
             <ThemeToggle />
           </div>
         </div>
