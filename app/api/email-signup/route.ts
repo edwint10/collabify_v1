@@ -1,5 +1,10 @@
-import { createClient } from "@/utils/supabase/server"
+import { createClient } from "@supabase/supabase-js"
 import { NextRequest, NextResponse } from "next/server"
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+)
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,8 +19,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid email address" }, { status: 400 })
     }
 
-    const supabase = await createClient()
-
     const { error } = await supabase
       .from("email_signups")
       .insert({ email: email.toLowerCase().trim() })
@@ -24,6 +27,7 @@ export async function POST(request: NextRequest) {
       if (error.code === "23505") {
         return NextResponse.json({ message: "You're already on the list!" }, { status: 200 })
       }
+      console.error("Email signup error:", error)
       return NextResponse.json({ error: "Something went wrong" }, { status: 500 })
     }
 
