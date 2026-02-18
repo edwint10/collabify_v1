@@ -3,22 +3,17 @@ runtime: nodejs22
 build:
   commands:
     pre-build:
-      - echo "Node version:" && node -v
-      - echo "NPM version:" && npm -v
-      - echo "Installing dependencies..."
       - npm ci
-      - echo "Dependencies installed successfully"
+      - echo "NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL" > .env.production
+      - echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=$NEXT_PUBLIC_SUPABASE_ANON_KEY" >> .env.production
+      - cat .env.production
     build:
-      - echo "Starting Next.js build..."
       - npm run build
-      - echo "Build completed successfully"
   env:
     - name: NEXT_PUBLIC_SUPABASE_URL
       value: "https://lhknnjiadvkyaaxnimbb.supabase.co"
     - name: NEXT_PUBLIC_SUPABASE_ANON_KEY
       value: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxoa25uamlhZHZreWFheG5pbWJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIyMDUwMDcsImV4cCI6MjA3Nzc4MTAwN30.CzF4Zkw3r8SkPeMoZHsIMw45YYkO05RfUUqAGnnC3VI"
-    - name: NODE_OPTIONS
-      value: "--max-old-space-size=1536"
 run:
   command: npm run start -- -p 8080
   network:
