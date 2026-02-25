@@ -47,7 +47,7 @@ export default function MessagesPage() {
           <CardContent className="p-8">
             <div className="text-center">
               <div className="h-8 w-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-              <p className="text-gray-500">Loading conversations...</p>
+              <p className="text-gray-500 dark:text-gray-400">Loading conversations...</p>
             </div>
           </CardContent>
         </Card>

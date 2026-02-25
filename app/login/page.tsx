@@ -67,7 +67,7 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4">
+    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-950 dark:to-gray-900 py-12 px-4">
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-2xl text-center">Sign In</CardTitle>
@@ -116,7 +116,7 @@ export default function LoginPage() {
             </Button>
 
             <div className="text-center text-sm">
-              <p className="text-gray-600">
+              <p className="text-gray-600 dark:text-gray-400">
                 Don&apos;t have an account?{" "}
                 <Link href="/" className="text-primary hover:underline">
                   Sign up

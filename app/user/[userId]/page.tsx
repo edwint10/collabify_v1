@@ -39,7 +39,7 @@ export default async function UserProfilePage({
   const { user, profile } = data
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4">
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-950 dark:to-gray-900 py-12 px-4">
       <div className="max-w-4xl mx-auto">
         <Card className="w-full">
           <CardHeader>
@@ -57,7 +57,7 @@ export default async function UserProfilePage({
                   </div>
                 ) : (
                   <div className={`p-4 rounded-full ${
-                    user.role === 'creator' ? 'bg-blue-100' : 'bg-purple-100'
+                    user.role === 'creator' ? 'bg-blue-100 dark:bg-blue-900/30' : 'bg-purple-100 dark:bg-purple-900/30'
                   }`}>
                     {user.role === 'creator' ? (
                       <User className="h-8 w-8 text-blue-600" />
@@ -90,10 +90,10 @@ export default async function UserProfilePage({
                     <div className="flex items-center gap-3">
                       <Instagram className="h-5 w-5 text-pink-600" />
                       <div>
-                        <p className="text-sm text-gray-500">Instagram</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">Instagram</p>
                         <p className="font-medium">@{profile.instagram_handle}</p>
                         {profile.follower_count_ig && (
-                          <p className="text-xs text-gray-400">
+                          <p className="text-xs text-gray-400 dark:text-gray-500">
                             {profile.follower_count_ig.toLocaleString()} followers
                           </p>
                         )}
@@ -104,10 +104,10 @@ export default async function UserProfilePage({
                     <div className="flex items-center gap-3">
                       <Video className="h-5 w-5 text-black" />
                       <div>
-                        <p className="text-sm text-gray-500">TikTok</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">TikTok</p>
                         <p className="font-medium">@{profile.tiktok_handle}</p>
                         {profile.follower_count_tiktok && (
-                          <p className="text-xs text-gray-400">
+                          <p className="text-xs text-gray-400 dark:text-gray-500">
                             {profile.follower_count_tiktok.toLocaleString()} followers
                           </p>
                         )}
@@ -118,7 +118,7 @@ export default async function UserProfilePage({
                 {profile.bio && (
                   <div>
                     <h3 className="font-semibold mb-2">Bio</h3>
-                    <p className="text-gray-700">{profile.bio}</p>
+                    <p className="text-gray-700 dark:text-gray-300">{profile.bio}</p>
                   </div>
                 )}
               </div>
@@ -131,7 +131,7 @@ export default async function UserProfilePage({
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {profile.vertical && (
                     <div>
-                      <p className="text-sm text-gray-500 mb-1">Industry Vertical</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Industry Vertical</p>
                       <p className="font-medium capitalize">{profile.vertical}</p>
                     </div>
                   )}
@@ -139,7 +139,7 @@ export default async function UserProfilePage({
                     <div className="flex items-center gap-2">
                       <DollarSign className="h-5 w-5 text-gray-400" />
                       <div>
-                        <p className="text-sm text-gray-500 mb-1">Ad Spend Range</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Ad Spend Range</p>
                         <p className="font-medium">{profile.ad_spend_range.replace('-', ' - ')}</p>
                       </div>
                     </div>
@@ -148,7 +148,7 @@ export default async function UserProfilePage({
                 {profile.bio && (
                   <div>
                     <h3 className="font-semibold mb-2">About</h3>
-                    <p className="text-gray-700">{profile.bio}</p>
+                    <p className="text-gray-700 dark:text-gray-300">{profile.bio}</p>
                   </div>
                 )}
               </div>

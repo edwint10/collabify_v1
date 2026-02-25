@@ -29,7 +29,7 @@ export default function SwipeCard({ userId, role, profile, matchScore, onSwipe }
         {/* Profile Header */}
         <div className="flex items-center gap-4 mb-6">
           <div className={`p-6 rounded-full ${
-            role === 'creator' ? 'bg-blue-100' : 'bg-purple-100'
+            role === 'creator' ? 'bg-blue-100 dark:bg-blue-900/30' : 'bg-purple-100 dark:bg-purple-900/30'
           }`}>
             {role === 'creator' ? (
               <User className="h-12 w-12 text-blue-600" />
@@ -44,7 +44,7 @@ export default function SwipeCard({ userId, role, profile, matchScore, onSwipe }
               </h3>
               <VerificationBadge verified={false} showText={false} />
             </div>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-500 dark:text-gray-400">
               {role === 'creator' ? 'Content Creator' : 'Brand/Business'}
             </p>
           </div>
@@ -57,13 +57,13 @@ export default function SwipeCard({ userId, role, profile, matchScore, onSwipe }
               {(profile.instagram_handle || profile.tiktok_handle) && (
                 <div className="grid grid-cols-2 gap-4">
                   {profile.instagram_handle && (
-                    <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+                    <div className="flex items-center gap-2 p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
                       <Instagram className="h-5 w-5 text-pink-600" />
                       <div>
-                        <p className="text-xs text-gray-500">Instagram</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">Instagram</p>
                         <p className="font-semibold">@{profile.instagram_handle}</p>
                         {profile.follower_count_ig && (
-                          <p className="text-xs text-gray-400">
+                          <p className="text-xs text-gray-400 dark:text-gray-500">
                             {profile.follower_count_ig.toLocaleString()} followers
                           </p>
                         )}
@@ -71,13 +71,13 @@ export default function SwipeCard({ userId, role, profile, matchScore, onSwipe }
                     </div>
                   )}
                   {profile.tiktok_handle && (
-                    <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+                    <div className="flex items-center gap-2 p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
                       <Video className="h-5 w-5 text-black" />
                       <div>
-                        <p className="text-xs text-gray-500">TikTok</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">TikTok</p>
                         <p className="font-semibold">@{profile.tiktok_handle}</p>
                         {profile.follower_count_tiktok && (
-                          <p className="text-xs text-gray-400">
+                          <p className="text-xs text-gray-400 dark:text-gray-500">
                             {profile.follower_count_tiktok.toLocaleString()} followers
                           </p>
                         )}
@@ -88,8 +88,8 @@ export default function SwipeCard({ userId, role, profile, matchScore, onSwipe }
               )}
               {profile.bio && (
                 <div>
-                  <p className="text-xs text-gray-500 mb-1">Bio</p>
-                  <p className="text-sm text-gray-700 line-clamp-3">{profile.bio}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Bio</p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 line-clamp-3">{profile.bio}</p>
                 </div>
               )}
             </>
@@ -97,16 +97,16 @@ export default function SwipeCard({ userId, role, profile, matchScore, onSwipe }
             <>
               <div className="grid grid-cols-2 gap-4">
                 {profile.vertical && (
-                  <div className="p-3 bg-gray-50 rounded-lg">
-                    <p className="text-xs text-gray-500 mb-1">Industry</p>
+                  <div className="p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Industry</p>
                     <p className="font-semibold capitalize">{profile.vertical}</p>
                   </div>
                 )}
                 {profile.ad_spend_range && (
-                  <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+                  <div className="flex items-center gap-2 p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
                     <DollarSign className="h-5 w-5 text-gray-400" />
                     <div>
-                      <p className="text-xs text-gray-500 mb-1">Budget</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Budget</p>
                       <p className="font-semibold">{profile.ad_spend_range.replace('-', ' - ')}</p>
                     </div>
                   </div>
@@ -114,8 +114,8 @@ export default function SwipeCard({ userId, role, profile, matchScore, onSwipe }
               </div>
               {profile.bio && (
                 <div>
-                  <p className="text-xs text-gray-500 mb-1">About</p>
-                  <p className="text-sm text-gray-700 line-clamp-3">{profile.bio}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">About</p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 line-clamp-3">{profile.bio}</p>
                 </div>
               )}
             </>

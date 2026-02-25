@@ -66,13 +66,13 @@ export default function CampaignsPage() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'active':
-        return 'bg-green-100 text-green-800'
+        return 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300'
       case 'completed':
-        return 'bg-blue-100 text-blue-800'
+        return 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300'
       case 'cancelled':
-        return 'bg-red-100 text-red-800'
+        return 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300'
       default:
-        return 'bg-gray-100 text-gray-800'
+        return 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300'
     }
   }
 
@@ -83,7 +83,7 @@ export default function CampaignsPage() {
           <CardContent className="p-8">
             <div className="text-center">
               <div className="h-8 w-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-              <p className="text-gray-500">Loading campaigns...</p>
+              <p className="text-gray-500 dark:text-gray-400">Loading campaigns...</p>
             </div>
           </CardContent>
         </Card>
@@ -113,7 +113,7 @@ export default function CampaignsPage() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-3xl font-bold">Campaigns</h1>
-          <p className="text-gray-500 mt-1">Manage your marketing campaigns</p>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">Manage your marketing campaigns</p>
         </div>
         <Link href="/campaigns/new">
           <Button>
@@ -146,8 +146,8 @@ export default function CampaignsPage() {
       {campaigns.length === 0 ? (
         <Card>
           <CardContent className="p-12 text-center">
-            <p className="text-gray-500 mb-4">No campaigns found</p>
-            <p className="text-sm text-gray-400 mb-6">
+            <p className="text-gray-500 dark:text-gray-400 mb-4">No campaigns found</p>
+            <p className="text-sm text-gray-400 dark:text-gray-500 mb-6">
               {statusFilter === "all"
                 ? "Create your first campaign to get started"
                 : `No campaigns with status "${statusFilter}"`}
@@ -173,7 +173,7 @@ export default function CampaignsPage() {
                         {campaign.status}
                       </Badge>
                     </div>
-                    <div className="flex items-center gap-4 text-sm text-gray-500 mt-2">
+                    <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mt-2">
                       {campaign.budget && (
                         <div className="flex items-center gap-1">
                           <DollarSign className="h-4 w-4" />
@@ -210,7 +210,7 @@ export default function CampaignsPage() {
               <CardContent>
                 {campaign.deliverables && campaign.deliverables.length > 0 && (
                   <div className="mt-2">
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
                       <strong>Deliverables:</strong> {campaign.deliverables.slice(0, 2).join(', ')}
                       {campaign.deliverables.length > 2 && ` +${campaign.deliverables.length - 2} more`}
                     </p>

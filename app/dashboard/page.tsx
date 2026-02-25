@@ -57,7 +57,7 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4">
+      <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-950 dark:to-gray-900 py-12 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center">
             <p className="text-lg text-gray-600">Loading...</p>
@@ -69,7 +69,7 @@ export default function DashboardPage() {
 
   if (error || !profileData) {
     return (
-      <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4">
+      <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-950 dark:to-gray-900 py-12 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center">
             <p className="text-lg text-destructive mb-4">{error || 'Profile not found'}</p>
@@ -83,13 +83,13 @@ export default function DashboardPage() {
   const { user, profile } = profileData
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4">
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-950 dark:to-gray-900 py-12 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
             Dashboard
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-gray-600 dark:text-gray-400">
             Welcome to Hyperbrandz!
           </p>
         </div>
@@ -100,7 +100,7 @@ export default function DashboardPage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className={`p-3 rounded-full ${
-                    user.role === 'creator' ? 'bg-blue-100' : 'bg-purple-100'
+                    user.role === 'creator' ? 'bg-blue-100 dark:bg-blue-900/30' : 'bg-purple-100 dark:bg-purple-900/30'
                   }`}>
                     {user.role === 'creator' ? (
                       <User className="h-6 w-6 text-blue-600" />
@@ -136,10 +136,10 @@ export default function DashboardPage() {
                       <div className="flex items-center gap-3">
                         <Instagram className="h-5 w-5 text-pink-600" />
                         <div>
-                          <p className="text-sm text-gray-500">Instagram</p>
+                          <p className="text-sm text-gray-500 dark:text-gray-400">Instagram</p>
                           <p className="font-medium">@{profile.instagram_handle}</p>
                           {profile.follower_count_ig && (
-                            <p className="text-xs text-gray-400">
+                            <p className="text-xs text-gray-400 dark:text-gray-500">
                               {profile.follower_count_ig.toLocaleString()} followers
                             </p>
                           )}
@@ -150,10 +150,10 @@ export default function DashboardPage() {
                       <div className="flex items-center gap-3">
                         <Video className="h-5 w-5 text-black" />
                         <div>
-                          <p className="text-sm text-gray-500">TikTok</p>
+                          <p className="text-sm text-gray-500 dark:text-gray-400">TikTok</p>
                           <p className="font-medium">@{profile.tiktok_handle}</p>
                           {profile.follower_count_tiktok && (
-                            <p className="text-xs text-gray-400">
+                            <p className="text-xs text-gray-400 dark:text-gray-500">
                               {profile.follower_count_tiktok.toLocaleString()} followers
                             </p>
                           )}
@@ -162,7 +162,7 @@ export default function DashboardPage() {
                     )}
                     {profile.bio && (
                       <div>
-                        <p className="text-sm text-gray-500 mb-1">Bio</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Bio</p>
                         <p className="text-sm">{profile.bio}</p>
                       </div>
                     )}
@@ -170,12 +170,12 @@ export default function DashboardPage() {
                 ) : (
                   <div className="space-y-4">
                     <div>
-                      <p className="text-sm text-gray-500 mb-1">Company Name</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Company Name</p>
                       <p className="font-medium">{profile.company_name}</p>
                     </div>
                     {profile.vertical && (
                       <div>
-                        <p className="text-sm text-gray-500 mb-1">Industry Vertical</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Industry Vertical</p>
                         <p className="font-medium capitalize">{profile.vertical}</p>
                       </div>
                     )}
@@ -183,14 +183,14 @@ export default function DashboardPage() {
                       <div className="flex items-center gap-2">
                         <DollarSign className="h-5 w-5 text-gray-400" />
                         <div>
-                          <p className="text-sm text-gray-500 mb-1">Ad Spend Range</p>
+                          <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Ad Spend Range</p>
                           <p className="font-medium">{profile.ad_spend_range.replace('-', ' - ')}</p>
                         </div>
                       </div>
                     )}
                     {profile.bio && (
                       <div>
-                        <p className="text-sm text-gray-500 mb-1">About</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">About</p>
                         <p className="text-sm">{profile.bio}</p>
                       </div>
                     )}
@@ -198,7 +198,7 @@ export default function DashboardPage() {
                 )
               ) : (
                 <div className="text-center py-4">
-                  <p className="text-gray-500 mb-4">Profile not yet created</p>
+                  <p className="text-gray-500 dark:text-gray-400 mb-4">Profile not yet created</p>
                   <Link href={`/profile/${user.role}`}>
                     <Button>Create Profile</Button>
                   </Link>

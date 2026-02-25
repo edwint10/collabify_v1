@@ -124,20 +124,20 @@ export default function RoleSelection() {
                 className={`p-6 rounded-lg border-2 transition-all hover:scale-105 ${
                   selectedRole === "creator"
                     ? "border-primary bg-primary/5 shadow-lg"
-                    : "border-gray-200 hover:border-primary/50"
+                    : "border-gray-200 dark:border-gray-700 hover:border-primary/50"
                 }`}
               >
                 <div className="flex flex-col items-center text-center space-y-4">
                   <div className={`p-4 rounded-full ${
-                    selectedRole === "creator" ? "bg-primary/10" : "bg-gray-100"
+                    selectedRole === "creator" ? "bg-primary/10" : "bg-gray-100 dark:bg-gray-800"
                   }`}>
                     <User className={`h-12 w-12 ${
-                      selectedRole === "creator" ? "text-primary" : "text-gray-600"
+                      selectedRole === "creator" ? "text-primary" : "text-gray-600 dark:text-gray-400"
                     }`} />
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold mb-2">Content Creator</h3>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
                       I create content and want to collaborate with brands
                     </p>
                   </div>
@@ -149,20 +149,20 @@ export default function RoleSelection() {
                 className={`p-6 rounded-lg border-2 transition-all hover:scale-105 ${
                   selectedRole === "brand"
                     ? "border-primary bg-primary/5 shadow-lg"
-                    : "border-gray-200 hover:border-primary/50"
+                    : "border-gray-200 dark:border-gray-700 hover:border-primary/50"
                 }`}
               >
                 <div className="flex flex-col items-center text-center space-y-4">
                   <div className={`p-4 rounded-full ${
-                    selectedRole === "brand" ? "bg-primary/10" : "bg-gray-100"
+                    selectedRole === "brand" ? "bg-primary/10" : "bg-gray-100 dark:bg-gray-800"
                   }`}>
                     <Building2 className={`h-12 w-12 ${
-                      selectedRole === "brand" ? "text-primary" : "text-gray-600"
+                      selectedRole === "brand" ? "text-primary" : "text-gray-600 dark:text-gray-400"
                     }`} />
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold mb-2">Business / Brand</h3>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
                       I represent a brand and want to find creators
                     </p>
                   </div>
@@ -171,7 +171,7 @@ export default function RoleSelection() {
             </div>
 
             <div className="text-center">
-              <p className="text-sm text-gray-600 mb-4">
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
                 Already have an account?{" "}
                 <button
                   onClick={() => router.push('/login')}

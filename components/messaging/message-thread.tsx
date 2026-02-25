@@ -57,8 +57,8 @@ export default function MessageThread({
     return (
       <div className="flex-1 flex items-center justify-center p-8">
         <div className="text-center">
-          <p className="text-gray-500 mb-2">No messages yet</p>
-          <p className="text-sm text-gray-400">
+          <p className="text-gray-500 dark:text-gray-400 mb-2">No messages yet</p>
+          <p className="text-sm text-gray-400 dark:text-gray-500">
             Start the conversation by sending a message
           </p>
         </div>
@@ -82,8 +82,8 @@ export default function MessageThread({
                 isOwnMessage 
                   ? 'bg-primary text-primary-foreground'
                   : otherUser?.role === 'creator'
-                  ? 'bg-blue-100 text-blue-600'
-                  : 'bg-purple-100 text-purple-600'
+                  ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600'
+                  : 'bg-purple-100 dark:bg-purple-900/30 text-purple-600'
               }`}>
                 {isOwnMessage ? (
                   <User className="h-4 w-4" />
@@ -99,7 +99,7 @@ export default function MessageThread({
                 <div className={`rounded-lg px-4 py-2 ${
                   isOwnMessage
                     ? 'bg-primary text-primary-foreground'
-                    : 'bg-gray-100 text-gray-900'
+                    : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100'
                 }`}>
                   {/* Message Text */}
                   {message.content && (
@@ -122,8 +122,8 @@ export default function MessageThread({
                               key={idx}
                               className={`flex flex-col gap-3 p-4 rounded-xl border-2 shadow-md hover:shadow-lg transition-all ${
                                 isOwnMessage
-                                  ? 'bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200 text-blue-900'
-                                  : 'bg-gradient-to-br from-gray-50 to-gray-100 border-gray-200 text-gray-900'
+                                  ? 'bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/50 dark:to-indigo-950/50 border-blue-200 dark:border-blue-800 text-blue-900 dark:text-blue-100'
+                                  : 'bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100'
                               }`}
                             >
                               <a
@@ -136,7 +136,7 @@ export default function MessageThread({
                                     : 'bg-white group-hover:bg-gray-50'
                                 } transition-colors shadow-sm`}>
                                   <FileText className={`h-6 w-6 ${
-                                    isOwnMessage ? 'text-blue-600' : 'text-gray-600'
+                                    isOwnMessage ? 'text-blue-600' : 'text-gray-600 dark:text-gray-400'
                                   }`} />
                                 </div>
                                 <div className="flex-1 min-w-0">
@@ -144,7 +144,7 @@ export default function MessageThread({
                                     {attachment.filename || attachment.name || 'Contract'}
                                   </span>
                                   <span className={`text-xs mt-1 ${
-                                    isOwnMessage ? 'text-blue-700' : 'text-gray-600'
+                                    isOwnMessage ? 'text-blue-700 dark:text-blue-300' : 'text-gray-600 dark:text-gray-400'
                                   }`}>
                                     Click to view and sign
                                   </span>
@@ -155,7 +155,7 @@ export default function MessageThread({
                                     : 'bg-white group-hover:bg-gray-50'
                                 } transition-colors`}>
                                   <Download className={`h-4 w-4 ${
-                                    isOwnMessage ? 'text-blue-600' : 'text-gray-600'
+                                    isOwnMessage ? 'text-blue-600' : 'text-gray-600 dark:text-gray-400'
                                   }`} />
                                 </div>
                               </a>
@@ -204,7 +204,7 @@ export default function MessageThread({
                             className={`flex items-center gap-2 p-2 rounded ${
                               isOwnMessage
                                 ? 'bg-primary-foreground/20 text-primary-foreground'
-                                : 'bg-white text-gray-700'
+                                : 'bg-white text-gray-700 dark:text-gray-300'
                             }`}
                           >
                             <File className="h-4 w-4" />
@@ -218,7 +218,7 @@ export default function MessageThread({
                 </div>
 
                 {/* Timestamp */}
-                <span className="text-xs text-gray-400 mt-1">
+                <span className="text-xs text-gray-400 dark:text-gray-500 mt-1">
                   {formatDistanceToNow(new Date(message.created_at), { addSuffix: true })}
                 </span>
               </div>

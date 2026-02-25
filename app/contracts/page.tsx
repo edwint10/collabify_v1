@@ -59,12 +59,12 @@ export default function ContractsPage() {
 
   const getStatusBadge = (contract: Contract) => {
     if (contract.signed_by_creator && contract.signed_by_brand) {
-      return <Badge className="bg-green-100 text-green-800">Fully Signed</Badge>
+      return <Badge className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">Fully Signed</Badge>
     }
     if (contract.signed_by_creator || contract.signed_by_brand) {
-      return <Badge className="bg-yellow-100 text-yellow-800">Pending Signatures</Badge>
+      return <Badge className="bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300">Pending Signatures</Badge>
     }
-    return <Badge className="bg-gray-100 text-gray-800">Unsigned</Badge>
+    return <Badge className="bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300">Unsigned</Badge>
   }
 
   const getTypeBadge = (type: string) => {
@@ -90,7 +90,7 @@ export default function ContractsPage() {
           <CardContent className="p-8">
             <div className="text-center">
               <div className="h-8 w-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-              <p className="text-gray-500">Loading contracts...</p>
+              <p className="text-gray-500 dark:text-gray-400">Loading contracts...</p>
             </div>
           </CardContent>
         </Card>
@@ -120,7 +120,7 @@ export default function ContractsPage() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-3xl font-bold">Contracts</h1>
-          <p className="text-gray-500 mt-1">Manage your contracts and NDAs</p>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">Manage your contracts and NDAs</p>
         </div>
       </div>
 
@@ -158,8 +158,8 @@ export default function ContractsPage() {
       {filteredContracts.length === 0 ? (
         <Card>
           <CardContent className="p-12 text-center">
-            <p className="text-gray-500 mb-4">No contracts found</p>
-            <p className="text-sm text-gray-400 mb-6">
+            <p className="text-gray-500 dark:text-gray-400 mb-4">No contracts found</p>
+            <p className="text-sm text-gray-400 dark:text-gray-500 mb-6">
               {typeFilter === "all" && statusFilter === "all"
                 ? "You haven't created any contracts or NDAs yet"
                 : `No contracts match the selected filters`}
@@ -182,11 +182,11 @@ export default function ContractsPage() {
                       <div className="flex items-center gap-3 mb-2">
                         {getTypeBadge(contract.type)}
                         {getStatusBadge(contract)}
-                        <span className="text-sm text-gray-500">
+                        <span className="text-sm text-gray-500 dark:text-gray-400">
                           {new Date(contract.created_at).toLocaleDateString()}
                         </span>
                       </div>
-                      <p className="text-sm text-gray-600 mt-2 whitespace-pre-wrap">
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-2 whitespace-pre-wrap">
                         {contentPreview}
                       </p>
                     </div>

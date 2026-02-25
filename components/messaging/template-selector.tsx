@@ -79,7 +79,7 @@ export default function TemplateSelector({
         <Card>
           <CardContent className="p-3">
             <div className="space-y-2">
-              <p className="text-sm text-gray-600 whitespace-pre-wrap">{preview}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400 whitespace-pre-wrap">{preview}</p>
               <div className="flex gap-2">
                 <button
                   onClick={handleUseTemplate}
@@ -92,7 +92,7 @@ export default function TemplateSelector({
                     setPreview("")
                     setSelectedTemplateId("")
                   }}
-                  className="text-xs px-3 py-1 bg-gray-100 text-gray-700 rounded hover:bg-gray-200"
+                  className="text-xs px-3 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
                 >
                   Cancel
                 </button>

@@ -89,7 +89,7 @@ export default function MainNav() {
   }
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 shadow-md">
+    <nav className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-white/10 bg-white/95 dark:bg-gray-950/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-gray-950/60 shadow-md dark:shadow-none">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo/Brand */}
@@ -116,7 +116,7 @@ export default function MainNav() {
                     "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all relative group",
                     isActive
                       ? "bg-primary text-primary-foreground shadow-sm"
-                      : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10 hover:text-gray-900 dark:hover:text-white"
                   )}
                   title={item.description}
                 >
@@ -141,7 +141,7 @@ export default function MainNav() {
                 "hidden sm:flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
                 pathname?.startsWith('/user/')
                   ? "bg-primary/10 text-primary"
-                  : "text-gray-700 hover:bg-gray-100"
+                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10"
               )}
             >
               <User className="h-4 w-4" />
@@ -152,7 +152,7 @@ export default function MainNav() {
               variant="ghost"
               size="sm"
               onClick={handleLogout}
-              className="hidden sm:flex text-gray-700 hover:text-destructive hover:bg-destructive/10"
+              className="hidden sm:flex text-gray-700 dark:text-gray-300 hover:text-destructive hover:bg-destructive/10"
             >
               <LogOut className="h-4 w-4 mr-2" />
               Logout
@@ -190,7 +190,7 @@ export default function MainNav() {
                     "flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all",
                     isActive
                       ? "bg-primary text-primary-foreground"
-                      : "text-gray-700 hover:bg-gray-100"
+                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10"
                   )}
                 >
                   <Icon className="h-5 w-5" />
@@ -198,7 +198,7 @@ export default function MainNav() {
                     <div className="font-semibold">{item.name}</div>
                     <div className={cn(
                       "text-xs mt-0.5",
-                      isActive ? "text-primary-foreground/80" : "text-gray-500"
+                      isActive ? "text-primary-foreground/80" : "text-gray-500 dark:text-gray-400"
                     )}>
                       {item.description}
                     </div>
@@ -210,7 +210,7 @@ export default function MainNav() {
               <Link
                 href={userId ? `/user/${userId}` : '/dashboard'}
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10"
               >
                 <User className="h-5 w-5" />
                 <span>Profile</span>
@@ -220,7 +220,7 @@ export default function MainNav() {
                   handleLogout()
                   setMobileMenuOpen(false)
                 }}
-                className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 w-full text-left"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10 w-full text-left"
               >
                 <LogOut className="h-5 w-5" />
                 <span>Logout</span>

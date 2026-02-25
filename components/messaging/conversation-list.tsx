@@ -44,8 +44,8 @@ export default function ConversationList({
         {[1, 2, 3].map((i) => (
           <Card key={i} className="animate-pulse">
             <CardContent className="p-4">
-              <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-              <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2"></div>
+              <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
             </CardContent>
           </Card>
         ))}
@@ -57,8 +57,8 @@ export default function ConversationList({
     return (
       <Card>
         <CardContent className="p-8 text-center">
-          <p className="text-gray-500 mb-2">No conversations yet</p>
-          <p className="text-sm text-gray-400">
+          <p className="text-gray-500 dark:text-gray-400 mb-2">No conversations yet</p>
+          <p className="text-sm text-gray-400 dark:text-gray-500">
             Start swiping to find matches and begin conversations
           </p>
         </CardContent>
@@ -83,8 +83,8 @@ export default function ConversationList({
                   {/* Avatar */}
                   <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${
                     otherUser?.role === 'creator'
-                      ? 'bg-blue-100 text-blue-600'
-                      : 'bg-purple-100 text-purple-600'
+                      ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600'
+                      : 'bg-purple-100 dark:bg-purple-900/30 text-purple-600'
                   }`}>
                     {otherUser?.role === 'creator' ? (
                       <User className="h-5 w-5" />
@@ -105,13 +105,13 @@ export default function ConversationList({
                         )}
                       </div>
                       {conversation.lastMessage && (
-                        <span className="text-xs text-gray-400 flex-shrink-0">
+                        <span className="text-xs text-gray-400 dark:text-gray-500 flex-shrink-0">
                           {formatDistanceToNow(new Date(conversation.lastMessage.created_at), { addSuffix: true })}
                         </span>
                       )}
                     </div>
                     {conversation.lastMessage && (
-                      <p className="text-sm text-gray-600 truncate">
+                      <p className="text-sm text-gray-600 dark:text-gray-400 truncate">
                         {conversation.lastMessage.content}
                       </p>
                     )}
