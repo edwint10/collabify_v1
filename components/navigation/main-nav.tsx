@@ -3,16 +3,19 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { 
-  LayoutDashboard, 
-  Users, 
-  MessageSquare, 
-  FileText, 
+import { useTheme } from "next-themes"
+import {
+  LayoutDashboard,
+  Users,
+  MessageSquare,
+  FileText,
   Megaphone,
   User,
   LogOut,
   Menu,
-  X
+  X,
+  Sun,
+  Moon
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -56,6 +59,12 @@ export default function MainNav() {
   const [userRole, setUserRole] = useState<'creator' | 'brand' | null>(null)
   const [userId, setUserId] = useState<string | null>(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const { theme, setTheme } = useTheme()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     const role = localStorage.getItem('userRole') as 'creator' | 'brand' | null
@@ -148,6 +157,20 @@ export default function MainNav() {
               <span>Profile</span>
             </Link>
             
+            {mounted && (
+              <button
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="hidden sm:flex w-9 h-9 rounded-full items-center justify-center border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
+                aria-label="Toggle theme"
+              >
+                {theme === "dark" ? (
+                  <Sun className="h-4 w-4 text-gray-400" />
+                ) : (
+                  <Moon className="h-4 w-4 text-gray-600" />
+                )}
+              </button>
+            )}
+
             <Button
               variant="ghost"
               size="sm"
@@ -215,6 +238,15 @@ export default function MainNav() {
                 <User className="h-5 w-5" />
                 <span>Profile</span>
               </Link>
+              {mounted && (
+                <button
+                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                  className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10 w-full text-left"
+                >
+                  {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                  <span>{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
+                </button>
+              )}
               <button
                 onClick={() => {
                   handleLogout()
