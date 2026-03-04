@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Instagram, Video, Save } from "lucide-react"
 import ImageUpload from "./image-upload"
+import SocialLinksEditor, { SocialLinks } from "./social-links-editor"
 
 const creatorProfileSchema = z.object({
   instagramHandle: z.string().optional(),
@@ -32,6 +33,7 @@ interface CreatorProfileFormEditProps {
     follower_count_tiktok?: number
     bio?: string
     profile_image_url?: string | null
+    social_links?: Record<string, string>
   }
 }
 
@@ -41,6 +43,7 @@ export default function CreatorProfileFormEdit({ userId, initialData }: CreatorP
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(!initialData)
   const [profileImageUrl, setProfileImageUrl] = useState<string | null>(initialData?.profile_image_url || null)
+  const [socialLinks, setSocialLinks] = useState<SocialLinks>(initialData?.social_links || {})
 
   const {
     register,
@@ -66,6 +69,7 @@ export default function CreatorProfileFormEdit({ userId, initialData }: CreatorP
       setValue('followerCountTiktok', initialData.follower_count_tiktok?.toString() || '')
       setValue('bio', initialData.bio || '')
       setProfileImageUrl(initialData.profile_image_url || null)
+      setSocialLinks(initialData.social_links || {})
       setLoading(false)
     }
   }, [initialData, setValue])
@@ -90,6 +94,7 @@ export default function CreatorProfileFormEdit({ userId, initialData }: CreatorP
           follower_count_tiktok: data.followerCountTiktok ? parseInt(data.followerCountTiktok) : undefined,
           bio: data.bio,
           profile_image_url: profileImageUrl,
+          social_links: socialLinks,
         }),
       })
 
@@ -199,6 +204,12 @@ export default function CreatorProfileFormEdit({ userId, initialData }: CreatorP
               </p>
             </div>
           </div>
+
+          <SocialLinksEditor
+            value={socialLinks}
+            onChange={setSocialLinks}
+            disabled={isSubmitting}
+          />
 
           <div className="space-y-2">
             <Label htmlFor="bio">Bio</Label>

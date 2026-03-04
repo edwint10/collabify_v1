@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Instagram, Video, Save } from "lucide-react"
+import SocialLinksEditor, { SocialLinks } from "./social-links-editor"
 
 const creatorProfileSchema = z.object({
   instagramHandle: z.string().optional(),
@@ -26,6 +27,7 @@ export default function CreatorProfileForm() {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [socialLinks, setSocialLinks] = useState<SocialLinks>({})
 
   const {
     register,
@@ -62,6 +64,7 @@ export default function CreatorProfileForm() {
           follower_count_ig: data.followerCountIG ? parseInt(data.followerCountIG) : undefined,
           follower_count_tiktok: data.followerCountTiktok ? parseInt(data.followerCountTiktok) : undefined,
           bio: data.bio,
+          social_links: socialLinks,
         }),
       })
 
@@ -153,6 +156,12 @@ export default function CreatorProfileForm() {
               </p>
             </div>
           </div>
+
+          <SocialLinksEditor
+            value={socialLinks}
+            onChange={setSocialLinks}
+            disabled={isSubmitting}
+          />
 
           <div className="space-y-2">
             <Label htmlFor="bio">Bio</Label>
