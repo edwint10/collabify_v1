@@ -6,6 +6,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import PostsFeed from "@/components/posts/posts-feed"
+import SocialLinksDisplay from "@/components/profile/social-links-display"
 
 async function getProfile(userId: string) {
   try {
@@ -121,6 +122,7 @@ export default async function UserProfilePage({
                     <p className="text-gray-700 dark:text-gray-300">{profile.bio}</p>
                   </div>
                 )}
+                <SocialLinksDisplay socialLinks={profile.social_links} />
               </div>
             ) : user.role === 'brand' && profile ? (
               <div className="space-y-6">
@@ -151,6 +153,7 @@ export default async function UserProfilePage({
                     <p className="text-gray-700 dark:text-gray-300">{profile.bio}</p>
                   </div>
                 )}
+                <SocialLinksDisplay socialLinks={profile.social_links} />
               </div>
             ) : (
               <div className="text-center py-8">

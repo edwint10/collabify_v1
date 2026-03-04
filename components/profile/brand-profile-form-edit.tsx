@@ -13,6 +13,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Building2, Save } from "lucide-react"
 import ImageUpload from "./image-upload"
+import SocialLinksEditor, { SocialLinks } from "./social-links-editor"
 
 const brandProfileSchema = z.object({
   companyName: z.string().min(1, "Company name is required"),
@@ -31,6 +32,7 @@ interface BrandProfileFormEditProps {
     ad_spend_range?: string
     bio?: string
     profile_image_url?: string | null
+    social_links?: Record<string, string>
   }
 }
 
@@ -40,6 +42,7 @@ export default function BrandProfileFormEdit({ userId, initialData }: BrandProfi
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(!initialData)
   const [profileImageUrl, setProfileImageUrl] = useState<string | null>(initialData?.profile_image_url || null)
+  const [socialLinks, setSocialLinks] = useState<SocialLinks>(initialData?.social_links || {})
 
   const {
     register,
@@ -67,6 +70,7 @@ export default function BrandProfileFormEdit({ userId, initialData }: BrandProfi
       setValue('adSpendRange', initialData.ad_spend_range || '')
       setValue('bio', initialData.bio || '')
       setProfileImageUrl(initialData.profile_image_url || null)
+      setSocialLinks(initialData.social_links || {})
       setLoading(false)
     }
   }, [initialData, setValue])
@@ -90,6 +94,7 @@ export default function BrandProfileFormEdit({ userId, initialData }: BrandProfi
           ad_spend_range: data.adSpendRange,
           bio: data.bio,
           profile_image_url: profileImageUrl,
+          social_links: socialLinks,
         }),
       })
 
@@ -210,6 +215,12 @@ export default function BrandProfileFormEdit({ userId, initialData }: BrandProfi
               )}
             </div>
           </div>
+
+          <SocialLinksEditor
+            value={socialLinks}
+            onChange={setSocialLinks}
+            disabled={isSubmitting}
+          />
 
           <div className="space-y-2">
             <Label htmlFor="bio">About Your Brand</Label>

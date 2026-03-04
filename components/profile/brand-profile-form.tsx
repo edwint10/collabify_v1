@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Building2, Save } from "lucide-react"
+import SocialLinksEditor, { SocialLinks } from "./social-links-editor"
 
 const brandProfileSchema = z.object({
   companyName: z.string().min(1, "Company name is required"),
@@ -26,6 +27,7 @@ export default function BrandProfileForm() {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [socialLinks, setSocialLinks] = useState<SocialLinks>({})
 
   const {
     register,
@@ -66,6 +68,7 @@ export default function BrandProfileForm() {
           vertical: data.vertical,
           ad_spend_range: data.adSpendRange,
           bio: data.bio,
+          social_links: socialLinks,
         }),
       })
 
@@ -168,6 +171,12 @@ export default function BrandProfileForm() {
               )}
             </div>
           </div>
+
+          <SocialLinksEditor
+            value={socialLinks}
+            onChange={setSocialLinks}
+            disabled={isSubmitting}
+          />
 
           <div className="space-y-2">
             <Label htmlFor="bio">About Your Brand</Label>

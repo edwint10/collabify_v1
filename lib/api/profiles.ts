@@ -9,6 +9,7 @@ export interface CreatorProfileData {
   bio?: string
   portfolio_items?: any[]
   profile_image_url?: string | null
+  social_links?: Record<string, string>
 }
 
 export interface BrandProfileData {
@@ -18,6 +19,7 @@ export interface BrandProfileData {
   bio?: string
   previous_campaigns?: any[]
   profile_image_url?: string | null
+  social_links?: Record<string, string>
 }
 
 export async function createCreatorProfile(userId: string, profileData: CreatorProfileData) {

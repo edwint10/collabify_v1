@@ -9,7 +9,7 @@ import { User, Building2, Edit, Instagram, Video, DollarSign } from "lucide-reac
 import Link from "next/link"
 import CreatorPerformanceTracker from "@/components/performance/creator-performance-tracker"
 import BrandPerformanceTracker from "@/components/performance/brand-performance-tracker"
-import SocialAccountsManager from "@/components/social/social-accounts-manager"
+import SocialLinksDisplay from "@/components/profile/social-links-display"
 
 interface ProfileData {
   user: {
@@ -255,10 +255,28 @@ export default function DashboardPage() {
           </Card>
         </div>
 
-        {/* Social Accounts Manager */}
-        {profile && (
+        {/* Social Links */}
+        {profile && profile.social_links && Object.keys(profile.social_links).length > 0 && (
           <div className="mt-8">
-            <SocialAccountsManager userId={user.id} />
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle>Social Links</CardTitle>
+                    <CardDescription>Your connected social media profiles</CardDescription>
+                  </div>
+                  <Link href={`/user/${user.id}/edit`}>
+                    <Button variant="outline" size="sm">
+                      <Edit className="h-4 w-4 mr-2" />
+                      Edit
+                    </Button>
+                  </Link>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <SocialLinksDisplay socialLinks={profile.social_links} />
+              </CardContent>
+            </Card>
           </div>
         )}
 
